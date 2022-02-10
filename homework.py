@@ -42,7 +42,10 @@ def send_message(bot, message):
         bot.send_message(TELEGRAM_CHAT_ID, message)
         logger.info(f'Бот отправил сообщение {message}')
     except Exception as error:
-        logger.exception('Ошибка при отправке сообщения ботом!', exc_info=error)
+        logger.exception(
+            'Ошибка при отправке сообщения ботом!',
+            exc_info=error
+        )
 
 
 def get_api_answer(current_timestamp):
@@ -57,10 +60,9 @@ def get_api_answer(current_timestamp):
         return response.json()
     except Exception as error:
         msg = (f'Эндпоинт {ENDPOINT} недоступен. '
-                f'Код ответа API: {response.status_code}')
+               f'Код ответа API: {response.status_code}')
         logger.exception(msg, exc_info=error)
         raise Exception
-
 
 
 def check_response(response):
@@ -77,7 +79,6 @@ def check_response(response):
 
 def parse_status(homework):
     """Получаем статус домашней работы."""
-    
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
     if homework_name == 'None' or homework_status == 'None':
@@ -100,7 +101,7 @@ def main():
         logger.critical('Нет необходимых токенов!')
         raise Exception
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
-    current_timestamp = int(time.time())-60*60*24*30
+    current_timestamp = int(time.time())
     while True:
         try:
             response = get_api_answer(current_timestamp)
