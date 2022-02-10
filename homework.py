@@ -56,7 +56,7 @@ def get_api_answer(current_timestamp):
         response = requests.get(ENDPOINT, headers=HEADERS, params=params)
         if response.status_code != HTTPStatus.OK:
             logger.error(f'Эндпоинт {ENDPOINT} недоступен.')
-            raise Exception
+            raise Exception(f'Эндпоинт {ENDPOINT} недоступен.')
         return response.json()
     except Exception as error:
         msg = (f'Эндпоинт {ENDPOINT} недоступен. '
@@ -102,6 +102,7 @@ def main():
         raise Exception
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
+    last_message = ''
     while True:
         try:
             response = get_api_answer(current_timestamp)
@@ -116,6 +117,9 @@ def main():
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
             logger.error(message)
+            if last_message != message:
+                send_message(bot, message)
+            last_message = message
             time.sleep(RETRY_TIME)
 
 
