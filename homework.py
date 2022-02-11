@@ -23,16 +23,14 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 handler = StreamHandler(stream=None)
 logger.addHandler(handler)
-formatter = logging.Formatter(
-    '%(asctime)s - %(levelname)s - %(message)s'
-)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 
 
 VERDICTS = {
     'approved': 'Работа проверена: ревьюеру всё понравилось. Ура!',
     'reviewing': 'Работа взята на проверку ревьюером.',
-    'rejected': 'Работа проверена: у ревьюера есть замечания.'
+    'rejected': 'Работа проверена: у ревьюера есть замечания.',
 }
 
 
@@ -43,8 +41,7 @@ def send_message(bot, message):
         logger.info(f'Бот отправил сообщение {message}')
     except Exception as error:
         logger.exception(
-            'Ошибка при отправке сообщения ботом!',
-            exc_info=error
+            'Ошибка при отправке сообщения ботом!', exc_info=error
         )
 
 
@@ -59,8 +56,10 @@ def get_api_answer(current_timestamp):
             raise Exception(f'Эндпоинт {ENDPOINT} недоступен.')
         return response.json()
     except Exception as error:
-        msg = (f'Эндпоинт {ENDPOINT} недоступен. '
-               f'Код ответа API: {response.status_code}')
+        msg = (
+            f'Эндпоинт {ENDPOINT} недоступен. '
+            f'Код ответа API: {response.status_code}'
+        )
         logger.exception(msg, exc_info=error)
         raise Exception
 
@@ -81,7 +80,7 @@ def parse_status(homework):
     """Получаем статус домашней работы."""
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
-    if homework_name == 'None' or homework_status == 'None':
+    if homework_name == None or homework_status == None:
         logger.error('Ошибка ключей словаря')
     if homework_status not in VERDICTS.keys():
         logger.error('Недокументированный статус домашней работы')
