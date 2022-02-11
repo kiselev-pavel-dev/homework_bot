@@ -80,7 +80,7 @@ def parse_status(homework):
     """Получаем статус домашней работы."""
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
-    if homework_name == None or homework_status == None:
+    if homework_name is None or homework_status is None:
         logger.error('Ошибка ключей словаря')
     if homework_status not in VERDICTS.keys():
         logger.error('Недокументированный статус домашней работы')
