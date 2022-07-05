@@ -1,2 +1,10 @@
-# homework_bot
-python telegram bot
+# Homework Bot
+
+## Описание:
+Telegram-бот, который проверяет статус проверки домашнего задания в Яндекс.Практикуме и сообщает, если статус был изменен в Telegram.
+
+## Стек:
+
+Python, API
+
+## Установка (Windows):
